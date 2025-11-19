@@ -12,7 +12,7 @@ This guide will help you get the Contract Entity Extraction & Analytics Microser
 1. **Clone the repository**:
 
    ```bash
-   cd python-pdf-interview
+   cd pdf-contract-analyzer
    ```
 
 2. **Create environment file**:

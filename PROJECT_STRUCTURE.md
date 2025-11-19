@@ -1,7 +1,7 @@
 # Project Structure
 
 ```
-python-pdf-interview/
+pdf-contract-analyzer/
 ├── README.md                           # Main project documentation
 ├── QUICKSTART.md                       # Quick start guide
 ├── DOCUMENTATION.md                    # Detailed technical documentation

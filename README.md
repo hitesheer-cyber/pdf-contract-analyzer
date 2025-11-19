@@ -76,7 +76,7 @@ pip install uv
 
 ```bash
 git clone <repository-url>
-cd python-pdf-interview
+cd pdf-contract-analyzer
 ```
 
 2. Create environment file:

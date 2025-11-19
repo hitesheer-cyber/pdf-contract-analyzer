@@ -58,7 +58,7 @@ A complete, production-ready enterprise solution for automated contract analysis
 
 ```bash
 # Clone and navigate
-cd python-pdf-interview
+cd pdf-contract-analyzer
 
 # Copy environment file
 cp .env.example .env
