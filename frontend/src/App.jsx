@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import FileUpload from './components/FileUpload';
-import Analytics from './components/Analytics';
-import ContractList from './components/ContractList';
+import FileUpload from './components/FileUpload.jsx';
+import Analytics from './components/Analytics.jsx';
+import ContractList from './components/ContractList.jsx';
 import './App.css';
 
 function App() {

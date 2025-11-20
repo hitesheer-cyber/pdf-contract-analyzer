@@ -63,7 +63,7 @@ That's it! The application is now running.
 
    ```bash
    cd frontend
-   npm start
+   npm run dev
    ```
 
 5. **Access the application**:

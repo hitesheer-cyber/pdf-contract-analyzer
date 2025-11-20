@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { getAnalytics } from '../services/api.js';
 import './Analytics.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
@@ -18,11 +19,11 @@ function Analytics({ refreshTrigger }) {
     setError(null);
     
     try {
-      const { getAnalytics } = require('../services/api');
       const data = await getAnalytics();
       setAnalytics(data);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to fetch analytics');
+      console.error('Analytics fetch error:', err);
+      setError(err.response?.data?.detail || err.message || 'Failed to fetch analytics');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 
 
 class EntityBase(BaseModel):
@@ -85,8 +85,8 @@ class AnalyticsResponse(BaseModel):
     total_contracts: int
     total_entities: int
     entity_type_distribution: Dict[str, int]
-    most_frequent_entities: List[Dict[str, any]]
-    contracts_missing_key_entities: List[Dict[str, any]]
+    most_frequent_entities: List[Dict[str, Any]]
+    contracts_missing_key_entities: List[Dict[str, Any]]
 
 
 class ErrorResponse(BaseModel):

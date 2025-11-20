@@ -1,0 +1,100 @@
+### Contract Entity Extraction API Tests
+### Base URL
+@baseUrl = http://localhost:8000
+@apiUrl = {{baseUrl}}/api
+
+### 1. Health Check - Root endpoint
+GET {{baseUrl}}/
+Accept: application/json
+
+###
+
+### 2. Upload Sample Contract (using curl - more reliable for file uploads)
+# curl -X POST "{{apiUrl}}/contracts/upload" \
+#   -H "accept: application/json" \
+#   -H "Content-Type: multipart/form-data" \
+#   -F "file=@sample_contract.pdf"
+
+### 2b. Upload Sample Contract (REST Client format)
+POST {{apiUrl}}/contracts/upload
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="file"; filename="sample_contract.pdf"
+Content-Type: application/pdf
+
+< ./sample_contract.pdf
+--boundary123--
+
+###
+
+### 3. List All Contracts
+GET {{apiUrl}}/contracts
+Accept: application/json
+
+###
+
+### 4. Get Specific Contract by ID
+# Replace {contract_id} with actual ID from upload response
+@contractId = ddfd9548-dd10-4e22-8c23-bd7163020830
+GET {{apiUrl}}/contracts/{{contractId}}
+Accept: application/json
+
+###
+
+### 5. Get Analytics
+GET {{apiUrl}}/analytics
+Accept: application/json
+
+###
+
+### 6. Delete Contract by ID
+# Replace {contract_id} with actual ID
+DELETE {{apiUrl}}/contracts/{{contractId}}
+Accept: application/json
+
+###
+
+### 7. API Documentation (OpenAPI/Swagger)
+GET {{baseUrl}}/docs
+
+###
+
+### 8. API Documentation (ReDoc)
+GET {{baseUrl}}/redoc
+
+###
+
+### 9. OpenAPI JSON Schema
+GET {{baseUrl}}/openapi.json
+Accept: application/json
+
+###
+
+### ============================================
+### CURL COMMANDS (Copy to terminal)
+### ============================================
+
+### Upload contract using curl
+# curl -X POST "http://localhost:8000/api/contracts/upload" \
+#   -H "accept: application/json" \
+#   -H "Content-Type: multipart/form-data" \
+#   -F "file=@sample_contract.pdf"
+
+### List all contracts
+# curl -X GET "http://localhost:8000/api/contracts" \
+#   -H "accept: application/json"
+
+### Get specific contract (replace CONTRACT_ID)
+# curl -X GET "http://localhost:8000/api/contracts/CONTRACT_ID" \
+#   -H "accept: application/json"
+
+### Get analytics
+# curl -X GET "http://localhost:8000/api/analytics" \
+#   -H "accept: application/json"
+
+### Delete contract (replace CONTRACT_ID)
+# curl -X DELETE "http://localhost:8000/api/contracts/CONTRACT_ID" \
+#   -H "accept: application/json"
+
+###

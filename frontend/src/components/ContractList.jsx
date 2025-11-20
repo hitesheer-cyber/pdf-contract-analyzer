@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getContracts } from '../services/api.js';
 import './ContractList.css';
 
 function ContractList({ refreshTrigger }) {
@@ -15,7 +16,6 @@ function ContractList({ refreshTrigger }) {
     setError(null);
     
     try {
-      const { getContracts } = require('../services/api');
       const data = await getContracts(0, 20);
       setContracts(data);
     } catch (err) {

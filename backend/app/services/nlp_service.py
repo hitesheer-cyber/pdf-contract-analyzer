@@ -180,7 +180,7 @@ class NLPService:
                 "text": entity["word"].strip(),
                 "entity_type": entity_type,
                 "position": entity["start"] + offset,
-                "confidence": round(entity["score"], 4),
+                "confidence": float(round(entity["score"], 4)),
             }
         except Exception as e:
             logger.warning(f"Error processing entity: {str(e)}")

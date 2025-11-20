@@ -82,7 +82,7 @@ cd pdf-contract-analyzer
 2. Create environment file:
 
 ```bash
-cp .env.example .env
+
 ```
 
 3. Start all services:

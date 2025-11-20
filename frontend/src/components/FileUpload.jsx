@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { uploadContract } from '../services/api.js';
 import './FileUpload.css';
 
 function FileUpload({ onUploadSuccess }) {
@@ -29,7 +30,6 @@ function FileUpload({ onUploadSuccess }) {
     setSuccess(null);
 
     try {
-      const { uploadContract } = require('../services/api');
       const result = await uploadContract(selectedFile);
       
       setSuccess(`Successfully uploaded ${result.filename}. Extracted ${result.entities_extracted} entities.`);
