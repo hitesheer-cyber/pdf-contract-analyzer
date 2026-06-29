@@ -54,9 +54,9 @@ Thumbs.db
 uploads/
 *.pdf
 
-# Model cache
+# Model cache (anchored to repo root so it does NOT match backend/app/models source package)
 .cache/
-models/
+/models/
 
 # React
 frontend/node_modules/

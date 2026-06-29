@@ -2,8 +2,13 @@
 
 import logging
 from typing import List, Dict, Optional
-from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline
+
 import torch
+from transformers import (
+    AutoModelForTokenClassification,
+    AutoTokenizer,
+    pipeline,
+)
 
 logger = logging.getLogger(__name__)
 
