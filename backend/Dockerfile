@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y \
 # Install uv
 RUN pip install --no-cache-dir uv
 
-# Copy project files
-COPY pyproject.toml ./
+# Copy project files (README.md is required by pyproject's `readme = "README.md"`)
+COPY pyproject.toml README.md ./
 COPY backend/ ./backend/
 
 # Install Python dependencies using uv

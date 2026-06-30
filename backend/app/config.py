@@ -1,5 +1,6 @@
 """Configuration settings for the application."""
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
 from pathlib import Path
@@ -21,7 +22,10 @@ class Settings(BaseSettings):
     max_upload_size: int = 10485760  # 10MB
 
     # CORS - use string to avoid JSON parsing issues
-    cors_origins_str: str = "http://localhost:3000,http://localhost:8000"
+    cors_origins_str: str = Field(
+        default="http://localhost:3000,http://localhost:8000",
+        validation_alias="CORS_ORIGINS",
+    )
 
     @property
     def cors_origins(self) -> List[str]:

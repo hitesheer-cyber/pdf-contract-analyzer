@@ -1,16 +1,13 @@
 version: "3.8"
 
 services:
-  # PostgreSQL Database
+  # PostgreSQL Database (internal only — no expose/ports per Coolify rule B2)
   postgres:
     image: postgres:15-alpine
-    container_name: contract-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-contract_db}
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -20,43 +17,41 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
-  # Backend FastAPI Service
+  # Backend FastAPI Service (internal — reached by frontend via service name)
   backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    container_name: contract-backend
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-contract_db}
       APP_HOST: 0.0.0.0
       APP_PORT: 8000
-      DEBUG: ${DEBUG:-True}
+      DEBUG: ${DEBUG:-False}
       NLP_MODEL_NAME: ${NLP_MODEL_NAME:-dslim/bert-base-NER}
       MAX_UPLOAD_SIZE: ${MAX_UPLOAD_SIZE:-10485760}
-      CORS_ORIGINS: http://localhost:3000,http://localhost:80,http://frontend
-    ports:
-      - "8000:8000"
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:80,http://frontend}
+    expose:
+      - "8000"
     depends_on:
       postgres:
         condition: service_healthy
     volumes:
-      - ./backend:/app/backend
       - nlp_models:/root/.cache/huggingface
     networks:
       - contract-network
     restart: unless-stopped
 
-  # Frontend React Service
+  # Frontend (nginx) — the ONLY public-facing service. Set the Coolify Domain here.
+  # It serves the built SPA and proxies /api -> backend:8000 (see frontend/nginx.conf),
+  # so the browser only ever talks to this one origin.
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: contract-frontend
-    environment:
-      REACT_APP_API_URL: http://localhost:8000/api
-    ports:
-      - "3000:80"
+    expose:
+      - "80"
     depends_on:
       - backend
     networks:
