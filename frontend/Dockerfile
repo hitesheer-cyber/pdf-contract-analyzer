@@ -27,9 +27,10 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port
 EXPOSE 80
 
-# Health check
+# Health check — use 127.0.0.1 (not localhost): nginx listens IPv4-only here, and
+# BusyBox wget would otherwise try IPv6 ::1 first and fail the probe.
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+    CMD wget -q -O /dev/null http://127.0.0.1:80/ || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
